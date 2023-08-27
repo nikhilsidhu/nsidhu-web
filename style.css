@@ -1,97 +1,149 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  --bone: #e3dacaff;
+  --night: #111111ff;
+  --cocoa-brown: #d76a03ff;
+  --dark-green: #232d11ff;
+  --glaucous: #6f8ab7ff;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+*,
+*:before,
+*:after {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+@font-face {
+  src: url("fonts/Roslindale-DisplayCondensedRegular-Testing.woff2")
+      format("woff2"),
+    url("fonts/Roslindale-DisplayCondensedRegular-Testing.woff") format("woff");
+  font-family: "Roslindale";
+  font-style: normal;
+  font-weight: normal;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--night);
+  color: var(--bone);
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  text-transform: uppercase;
+  font-family: "Roslindale";
+  font-size: 3vw;
+  font-weight: 400;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+h1 + h1 {
+  color: rgba(255, 255, 255, 0.4);
+  text-shadow: 0 -2px rgba(0, 0, 0, 0.6);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
+h2 {
+  font-family: "Iosevka Term";
+  text-transform: uppercase;
 }
 
-.card {
-  padding: 2em;
+ul {
+  list-style-type: none;
 }
 
-.read-the-docs {
-  color: #888;
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  grid-template-areas:
+    "head"
+    "body"
+    "foot";
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.title {
+  grid-area: head;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.nav {
+  grid-area: body;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  /* border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white; */
+}
+
+.nav-list-wrapper {
+  position: relative;
+}
+
+.nav-list {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-list > li {
+  position: relative;
+}
+
+.dropdown {
+  opacity: 0;
+  display: none;
+  position: absolute;
+  width: 100%;
+  transition: all 0.5s;
+  color: var(--night);
+  background-color: var(--bone);
+  position: absolute;
+}
+
+.trigger-enter .dropdown {
+  display: flex;
+}
+
+.trigger-enter-active .dropdown {
+  opacity: 1;
+}
+
+.dropdown-background {
+  width: 100px;
+  height: 100px;
+  background: var(--bone);
+  border-radius: 4px;
+  box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1),
+    0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s, opacity 0.1s, translate 0.2s;
+  transform-origin: 50% 0%;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  position: absolute;
+}
+
+.dropdown-background.open {
+  opacity: 1;
+  margin-top: 10px;
+}
+
+.arrow {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  display: block;
+  background-color: var(--bone);
+  border-radius: 2px;
+  transform: translateY(-50%) rotate(45deg);
 }

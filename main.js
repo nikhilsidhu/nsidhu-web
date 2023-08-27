@@ -1,24 +1,37 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+const triggers = document.querySelectorAll(".nav-list > li");
+const background = document.querySelector(".dropdown-background");
+const nav = document.querySelector(".nav");
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+function handleEnter() {
+  this.classList.add("trigger-enter");
+  setTimeout(() => {
+    if (this.classList.contains("trigger-enter")) {
+      this.classList.add("trigger-enter-active");
+    }
+  }, 150);
+  background.classList.add("open");
 
-setupCounter(document.querySelector('#counter'))
+  const dropdown = this.querySelector(".dropdown");
+  const dropdownCoords = dropdown.getBoundingClientRect();
+  const navCoords = nav.getBoundingClientRect();
+
+  const coords = {
+    top: dropdownCoords.top - navCoords.top,
+    left: dropdownCoords.left + this.offsetWidth / 2 - window.innerWidth / 2,
+  };
+
+  background.style.setProperty(
+    "transform",
+    `translate(${coords.left}px, ${coords.top}px)`
+  );
+}
+
+function handleLeave() {
+  this.classList.remove("trigger-enter", "trigger-enter-active");
+  background.classList.remove("open");
+}
+
+triggers.forEach((trigger) => {
+  trigger.addEventListener("mouseenter", handleEnter);
+  trigger.addEventListener("mouseleave", handleLeave);
+});
